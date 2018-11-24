@@ -14,7 +14,7 @@ public class Greeter {
 
   /**
    * This is a method.
-	 *
+   *
    * @param someone The person name
    * @return Greeting String
    */
