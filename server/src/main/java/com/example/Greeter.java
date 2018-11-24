@@ -11,10 +11,10 @@ public class Greeter {
   public Greeter() {
 
   }
-  
+	
   /**
    * This is a method.
-   * 
+	 *
    * @param someone The person name
    * @return Greeting String
    */
