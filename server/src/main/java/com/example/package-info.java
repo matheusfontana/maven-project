@@ -1,4 +1,4 @@
 /**
- * This is a package ¯\_(ツ)_/¯
+ * This is a package.
  */
  package com.example;
