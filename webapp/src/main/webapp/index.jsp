@@ -1,1 +1,1 @@
-Welcome, stranger!
+Welcome, auslander!
