@@ -1,5 +1,15 @@
 pipeline{
     agent any
+    
+    parameters {
+         string(name: 'tomcat_stg', defaultValue: '18.191.249.244', description: 'Staging Server')
+         string(name: 'tomcat_prod', defaultValue: '3.17.153.45', description: 'Production Server')
+    }
+    
+    triggers {
+         pollSCM('* * * * *')
+     }
+    
     stages{
         stage('Build'){
             steps{
@@ -14,7 +24,7 @@ pipeline{
         }
         stage ('Deploy to Staging'){
             steps {
-                build job: 'deploy-to-staging'
+                sh "scp -i /tomcat-demo.pem **/target/*;war ec2-user@${params.tomcat_stg}:/var/lib/tomcat7/webapps"
             }
         }
         stage ('Deploy to Production'){
@@ -23,7 +33,7 @@ pipeline{
                     input message: 'Approve PROD deployment?'
                 }
 
-                build job: 'deploy-to-prod'
+                sh "scp -i /tomcat-demo.pem **/target/*;war ec2-user@${params.tomcat_prd}:/var/lib/tomcat7/webapps"
             }
             post {
                 success{
