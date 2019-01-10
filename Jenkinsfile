@@ -24,6 +24,7 @@ pipeline{
         }
         stage ('Deploy to Staging'){
             steps {
+                sh "ssh-keyscan -H ${params.tomcat_stg} >> ~/.ssh/known_hosts"
                 sh "scp -i /tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_stg}:/var/lib/tomcat7/webapps"
             }
         }
@@ -32,7 +33,8 @@ pipeline{
                 timeout(time:5, unit: 'DAYS'){
                     input message: 'Approve PROD deployment?'
                 }
-
+                
+                sh "ssh-keyscan -H ${params.tomcat_prd} >> ~/.ssh/known_hosts"
                 sh "scp -i /tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prd}:/var/lib/tomcat7/webapps"
             }
             post {
